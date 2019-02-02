@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+<body>
+<!-- here is abi for the 3 contracts contract, Verifieer, CoursetroContract -->
+
+
+    <div class="container">
+
+      <h1>Vehicular communication</h1>
+      <span id="countIns"></span>
+
+
+      <h2 id="instructor"></h2>
+      <span id="insTrans"></span>
+      <hr>
+
+      <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
+
+      <label for="fName" class="col-lg-2 control-label">First Name</label>
+      <input id="fName" type="text">
+
+      <label for="lName" class="col-lg-2 control-label">Last Name</label>
+      <input id="lName" type="text">
+
+      <label for="age" class="col-lg-2 control-label">vehicle year</label>
+      <input id="age" type="text">
+
+      <button id="button">Update vehicle</button>
+      <button id="button2">Update tx</button>
+      <button id="button3">Updat233udbce tx</button>
+      <button id="button4">verify success tx</button>
+
+      <h3>this button first proves zero knowledge proof and if successful adds an instructors</h3>
+
+
+      <label for="firstName" class="col-lg-2 control-label">First Name</label>
+      <input id="firstName" type="text">
+
+      <label for="lastName" class="col-lg-2 control-label">Last Name</label>
+      <input id="lastName" type="text">
+
+      <label for="year" class="col-lg-2 control-label">instructor year</label>
+      <input id="year" type="text">
+
+
+      <button id="button5">inherited contract </button>
+      <span id="displayinstructors"></span>
+
+      <span id="verifySuccess"></span>
+
+
+
+
+      <h1>verifier 3 contract (inherited)</h1>
+      <h2>display instructor for default address</h2>
+
+
+
+
+      <button id="buttonDisplayAllInstructors">display instrucotr </button>
+      <span id="instructorForAddress"></span>
+
+      <h1> Enter classroom</h1>
+      <h2>1. Create a classroom with the following details the user creating the class will be the owner</h2>
+
+
+        <label for="className" class="col-lg-2 control-label">Class Name</label>
+        <input id="className" type="text">
+
+        <label for="classNumber" class="col-lg-2 control-label">Course Number</label>
+        <input id="classNumber" type="text">
+
+
+
+
+      <button id="createClass">Create Class </button>
+      <h2>2. this button represent a student entering the classroom an event is added to the list for that classroom</h2>
+      <!-- <IMG SRC="enter_room.gif"> -->
+      <button id="enterRoom">Enter Room </button>
+      <h2>3. this button queries all entries into that room </h2>
+      <button id="getRoom">All Entries </button>
+      <span id="displayClassDetails"></span>
+      <h2>4. this button queries all entries for a single address (person) </h2>
+      <button id="getUserEntries">User Entries </button>
+      <label for="classNameToEnter" class="col-lg-2 control-label">Class to Enter</label>
+      <input id="classNameToEnter" type="text">
+
+
+
+
+
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+    var a = ["0x8b78a430cd2907120cf239e7dc621b4f3e772d487917e962354d350a347457", "0x14bd398a121de1835fcf50105b2f7f53b9a038c6149c32219a1037c0957406dd"]
+    var a_p = ["0x9638fbf0401fd861e67dcfc56627942257db98e4eb65eb1756b3ade45683a8b", "0x11f8d30a6c765a20f285c86971ad9d54f95c27539593feb725c1697006f7bbb2"]
+    var b = [["0x15dbd7caf97ad10c7e8dcc6cd5ffbe3dd2cfee822637c110a96b3c20570a97eb", "0x28e24b8d307c71713c2267ae85371b252a94f59a8d0329aaf9a916b602351e89"], ["0x6bb82890b2639b4f2d8d8582315d7cc4b9bf9f2a5ba2fec868ea7873c899576", "0x25ff1f15874577e7ecfab3639447f3823ca0d7fa4cb496f73dbd1546cb3743a7"]]
+    var b_p = [ "0x1456d1c59bb637b7af83d5b60bc08230961716376aa115d63f5c6e6818a0fbe7", "0x142d511f32efd6d2b89ff3d7126432a2ef51e8b4b1905ee2f614238e7db0be53"]
+    var c = ["0x2fbb99c54a250f1b70cbe423db5e62860801b40ce1d629ac971ba62b17bb15b8", "0x95541dbb62cb372483c7515bc8d22cc8edc6659ef4a167ffd070f6a4c43c7c4"]
+
+    var c_p = ["0x209b042219f83402954b280bed39b4068495a096a04332b5b3f669c675989277", "0xada04398d7005c740ee52dc951d3470501c34a6c47dbc3652b9b6bc48d6a5e"]
+    var h = ["0x1a658de0766d097847afa27d3f4f4ec35edf0a38c6d8793448de50d18b04c26f", "0x1f24492543392cd45f00656c6ca45d9d7d715e251eb26c29a9083b7ef85a65ea"]
+    var k = ["0x1570bf39bb31226036631d4fb4c300714686829f043f3a81e0a743b37ca6a16f", "0xd958e4a8b347e2abfa6118e500f5e33a62dea3613067f89c50492330cb23da1"]
+
+
+    if (typeof web3 !== 'undefined') {
+        web3 = new Web3(web3.currentProvider);
+    } else {
+        // set the provider you want from Web3.providers
+        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    }
+    params = {
+        // 'gasPrice':20000000000,
+        // 'gas': 4000000,
+        'from':web3.eth.defaultAccount,
+    }
+    // abi = json.loads('')
+
+var classroom_contract = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getClasses",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getInstructor",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "bytes16"
+			},
+			{
+				"name": "",
+				"type": "bytes16"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "success",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getClass",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "bytes16"
+			},
+			{
+				"name": "",
+				"type": "bytes16"
+			},
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "countClasses",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "a",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "a_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "b",
+				"type": "uint256[2][2]"
+			},
+			{
+				"name": "b_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "c",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "c_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "h",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "k",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "input",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"name": "_fName",
+				"type": "bytes16"
+			},
+			{
+				"name": "_lName",
+				"type": "bytes16"
+			}
+		],
+		"name": "verifyFifteen",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getInstructors",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "instructorAccts",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"name": "_fName",
+				"type": "bytes16"
+			},
+			{
+				"name": "_lName",
+				"type": "bytes16"
+			}
+		],
+		"name": "setClass",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "user_address",
+				"type": "address"
+			}
+		],
+		"name": "add_Entry",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "countInstructors",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"name": "_fName",
+				"type": "bytes16"
+			},
+			{
+				"name": "_lName",
+				"type": "bytes16"
+			}
+		],
+		"name": "setInstructor",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "classesAccts",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "a",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "a_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "b",
+				"type": "uint256[2][2]"
+			},
+			{
+				"name": "b_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "c",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "c_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "h",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "k",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "input",
+				"type": "uint256[2]"
+			}
+		],
+		"name": "verifyTx",
+		"outputs": [
+			{
+				"name": "r",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "fName",
+				"type": "bytes16"
+			},
+			{
+				"indexed": false,
+				"name": "lName",
+				"type": "bytes16"
+			},
+			{
+				"indexed": false,
+				"name": "age",
+				"type": "uint256"
+			}
+		],
+		"name": "classInfo",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "fName",
+				"type": "bytes16"
+			},
+			{
+				"indexed": false,
+				"name": "lName",
+				"type": "bytes16"
+			},
+			{
+				"indexed": false,
+				"name": "age",
+				"type": "uint256"
+			}
+		],
+		"name": "instructorInfo",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "Verified",
+		"type": "event"
+	}
+]);
+
+
+var inherited_contract = web3.eth.contract([
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "fName",
+				"type": "bytes16"
+			},
+			{
+				"indexed": false,
+				"name": "lName",
+				"type": "bytes16"
+			},
+			{
+				"indexed": false,
+				"name": "age",
+				"type": "uint256"
+			}
+		],
+		"name": "instructorInfo",
+		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"name": "_fName",
+				"type": "bytes16"
+			},
+			{
+				"name": "_lName",
+				"type": "bytes16"
+			}
+		],
+		"name": "setInstructor",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "Verified",
+		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "a",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "a_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "b",
+				"type": "uint256[2][2]"
+			},
+			{
+				"name": "b_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "c",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "c_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "h",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "k",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "input",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"name": "_fName",
+				"type": "bytes16"
+			},
+			{
+				"name": "_lName",
+				"type": "bytes16"
+			}
+		],
+		"name": "verifyFifteen",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "a",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "a_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "b",
+				"type": "uint256[2][2]"
+			},
+			{
+				"name": "b_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "c",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "c_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "h",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "k",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "input",
+				"type": "uint256[2]"
+			}
+		],
+		"name": "verifyTx",
+		"outputs": [
+			{
+				"name": "r",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "countInstructors",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getInstructor",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "bytes16"
+			},
+			{
+				"name": "",
+				"type": "bytes16"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getInstructors",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "instructorAccts",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "success",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+
+    var contract = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "success",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "a",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "a_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "b",
+				"type": "uint256[2][2]"
+			},
+			{
+				"name": "b_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "c",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "c_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "h",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "k",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "input",
+				"type": "uint256[2]"
+			}
+		],
+		"name": "verifyFifteen",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "a",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "a_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "b",
+				"type": "uint256[2][2]"
+			},
+			{
+				"name": "b_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "c",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "c_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "h",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "k",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "input",
+				"type": "uint256[2]"
+			}
+		],
+		"name": "verifyTx",
+		"outputs": [
+			{
+				"name": "r",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "Verified",
+		"type": "event"
+	}
+
+
+
+  // ABI of Verifier and    CoursetroContract folded here
+
+]);
+
+    // web3.eth.defaultAccount
+    web3.eth.defaultAccount = web3.eth.accounts[0];
+    var Verifier = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "a",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "a_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "b",
+				"type": "uint256[2][2]"
+			},
+			{
+				"name": "b_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "c",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "c_p",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "h",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "k",
+				"type": "uint256[2]"
+			},
+			{
+				"name": "input",
+				"type": "uint256[2]"
+			}
+		],
+		"name": "verifyTx",
+		"outputs": [
+			{
+				"name": "r",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "Verified",
+		"type": "event"
+	}
+]);
+
+    var CoursetroContract = web3.eth.contract([
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "fName",
+				"type": "bytes16"
+			},
+			{
+				"indexed": false,
+				"name": "lName",
+				"type": "bytes16"
+			},
+			{
+				"indexed": false,
+				"name": "age",
+				"type": "uint256"
+			}
+		],
+		"name": "instructorInfo",
+		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"name": "_fName",
+				"type": "bytes16"
+			},
+			{
+				"name": "_lName",
+				"type": "bytes16"
+			}
+		],
+		"name": "setInstructor",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "countInstructors",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getInstructor",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "bytes16"
+			},
+			{
+				"name": "",
+				"type": "bytes16"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getInstructors",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "instructorAccts",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+
+var classroom_verifier = classroom_contract.at('0xfa52e243adea165b513c7220b2192fc8df7b3429');
+console.log(classroom_verifier);
+
+
+
+var Verifyer3 = inherited_contract.at('0xfa52e243adea165b513c7220b2192fc8df7b3429');
+console.log(Verifyer2);
+
+var Verifyer2 = contract.at('0x8a719d91b201d4d76275bb651044f54cd4c13435');
+console.log(Verifyer2);
+var Verifyer = Verifier.at('0x7a91eab9ea80caa81c44ec0a51cf760c65c2eb10');
+console.log(Verifyer);
+var Coursetro = CoursetroContract.at('0x0750683d5ee002a72ab86b63aea077137585a508');
+console.log(Coursetro);
+
+// Change ^-- that to:
+var instructorEvent = Coursetro.instructorInfo({}, 'latest');
+
+instructorEvent.watch(function(error, result) {
+    if (result) {
+        if (result.blockHash != $("#insTrans").html())
+             $("#loader").hide();
+
+        $("#insTrans").html('Block hash: ' + result.blockHash);
+        $("#instructor").html(web3.toAscii(result.args.fName) + ' ' + web3.toAscii(result.args.lName) + ' (' + result.args.age + ' years old)');
+    } else {
+         $("#loader").hide();
+    }
+});
+// Coursetro.getInstructor(function(error, result){
+//     if(!error)
+//         {
+//             $("#instructor").html(result[0]+' ('+result[1]+' years old)');
+//             console.log(result);
+//         }
+//     else
+//         console.error(error);
+// });
+
+
+
+Coursetro.countInstructors((err, res) => {
+    if (res)
+     $("#countIns").html(res.c + ' vehicles');
+})
+
+$("#button").click(function() {
+     $("#loader").show();
+    Coursetro.setInstructor(web3.eth.defaultAccount, $("#age").val(), $("#fName").val(), $("#lName").val(), (err, res) => {
+        if (err) {
+            $("#loader").hide();
+        }
+    });
+});
+
+
+// function below creates a transaction to verify this user and provide zero knowledge Proof
+// current proof program is
+// 1 + 2 + (input a) == 15 else return 0
+// return 1
+//out put is 1 and input should be 12
+// can be changed to request social security number or something like Authenthication
+
+$("#button3").click(function() {
+     $("#loader").show();
+    var txhash = Verifyer2.verifyFifteen(a, a_p, b, b_p, c, c_p, h, k, [11,1],transact=params,  (err, res) => {
+
+        if (err) {
+            $("#loader").hide();
+        }
+    });
+
+    // at this point zero knowledge has provided Authenthication
+    // you have proven that you know some secret function
+    // lets assume this first blockchain is kept track of by all members
+    // hence it is public and people can see these transaction have occured
+
+
+    // if instead contract success return
+    // i want to return a new _address
+    // once new address is returned I will set that new address as default
+    // tranfer all assets to new _address
+
+    var success = Verifyer2.success( (err, res) => {
+      // var success = Verifyer2.success();
+      // console.log(success);
+      console.log(success);
+        if (err) {
+            $("#loader").hide();
+        }
+    });
+});
+$("#button4").click(function() {
+     $("#loader").show();
+    var success = Verifyer2.success( (err, res) => {
+      // var success = Verifyer2.success();
+      // console.log(success);
+      console.log(res);
+      $("#verifySuccess").html('Zero knowledge Authenthication was ' + res + ' !!');
+        if (err) {
+            $("#loader").hide();
+        }
+    });
+});
+
+// $("#age").val(), $("#fName").val(), $("#lName").val()
+$("#button5").click(function() {
+     $("#loader").show();
+    var txhash = Verifyer3.verifyFifteen(a, a_p, b, b_p, c, c_p, h, k, [12,1],
+       web3.eth.defaultAccount , $("#year").val(), $("#firstName").val(), $("#lastName").val()
+       , transact=params,  (err, res) => {
+
+        if (err) {
+            $("#loader").hide();
+        }
+    });
+    $("#loader").hide();
+    classroom_verifier.setInstructor(web3.eth.defaultAccount,$("#year").val(),
+     $("#firstName").val(), $("#lastName").val(),
+     transact=params,  (err, res) => {
+     if (err) {
+         $("#loader").hide();
+     }
+   });
+    // if instead contract success return
+    // i want to return a new _address
+    // once new address is returned I will set that new address as default
+    // tranfer all assets to new _address
+
+    // var success = Verifyer3.success( (err, res) => {
+    //
+    //   console.log(success);
+    //     if (err) {
+    //         $("#loader").hide();
+    //     }
+    // });
+});
+
+$("#buttonDisplayAllInstructors").click(function() {
+     $("#loader").show();
+    var success = Verifyer3.getInstructor( web3.eth.defaultAccount ,(err, res) => {
+      // var success = Verifyer2.success();
+      // console.log(success);
+      console.log(res);
+      $("#instructorForAddress").html('Display Instructor ffor given address default  ' + res + ' !!');
+        if (err) {
+            $("#loader").hide();
+        }
+    });
+});
+
+$("#createClass").click(function() {
+     $("#loader").show();
+    var txhash = classroom_verifier.verifyFifteen(a, a_p, b, b_p, c, c_p, h, k, [12,1],
+       web3.eth.defaultAccount , $("#year").val(), $("#firstName").val(), $("#lastName").val()  ,
+       transact=params,  (err, res) => {
+        if (err) {
+            $("#loader").hide();
+        }
+    });
+    $("#loader").hide();
+
+    classroom_verifier.setClass(web3.eth.defaultAccount, $("#classNumber").val(),
+    $("#className").val(), "course",  (err, res) => {
+        if (err) {
+            $("#loader").hide();
+        }
+    });
+    var success = classroom_verifier.success( (err, res) => {
+      console.log(success);
+        if (err) {
+            $("#loader").hide();
+        }
+    });
+});
+
+
+$("#enterRoom").click(function() {
+     $("#loader").show();
+    var txhash = classroom_verifier.verifyFifteen(a, a_p, b, b_p, c, c_p, h, k,
+      [12,1], web3.eth.defaultAccount ,
+       $("#year").val(), $("#firstName").val(), $("#lastName").val()  ,
+        (err, res) => {
+        if (err) {
+            $("#loader").hide();
+        }
+    });
+    $("#loader").hide();
+
+    // var success = classroom_verifier.success( (err, res) => {
+    //
+    //   console.log(success);
+    //     if (err) {
+    //         $("#loader").hide();
+    //     }
+    // });
+
+    classroom_verifier.add_Entry($("#classNameToEnter").val(),
+      web3.eth.defaultAccount, transact=params,  (err, res) => {
+        if (err) {
+            $("#loader").hide();
+        }
+    });
+});
+
+$("#getRoom").click(function() {
+
+  $("#displayClassDetails").html('Details for the default class  \n');
+    var class_details = classroom_verifier.getClass(web3.eth.defaultAccount,
+        transact=params,  (err, res) => {
+          for (i=0;i<res[3].length;i++){
+          // $("#displayClassDetails").html('Details for the default class  '
+          //  +    res[3][i] + '\n !!');
+           $("#displayClassDetails").append(res[3][i]+'\n');
+       }
+
+        if (err) {
+            $("#loader").hide();
+        }
+    });
+
+});
+
+    </script>
+
+</body>
+</html>

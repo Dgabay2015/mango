@@ -1,0 +1,2191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+    <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+<!-- here is abi for the 3 contracts contract, Verifieer, CoursetroContract -->
+
+
+    <div class="container">
+
+      <!-- <h1>Vehicular communication</h1>
+      <span id="countIns"></span>
+
+
+      <h2 id="instructor"></h2>
+      <span id="insTrans"></span>
+      <hr>
+
+      <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
+
+      <label for="fName" class="col-lg-2 control-label">First Name</label>
+      <input id="fName" type="text">
+
+      <label for="lName" class="col-lg-2 control-label">Last Name</label>
+      <input id="lName" type="text">
+
+      <label for="age" class="col-lg-2 control-label">vehicle year</label>
+      <input id="age" type="text">
+
+      <button id="button">Update vehicle</button>
+      <button id="button2">Update tx</button>
+      <button id="button3">Updat233udbce tx</button>
+      <button id="button4">verify success tx</button>
+
+      <h3>this button first proves zero knowledge proof and if successful adds an instructors</h3>
+
+
+      <label for="firstName" class="col-lg-2 control-label">First Name</label>
+      <input id="firstName" type="text">
+
+      <label for="lastName" class="col-lg-2 control-label">Last Name</label>
+      <input id="lastName" type="text">
+
+      <label for="year" class="col-lg-2 control-label">instructor year</label>
+      <input id="year" type="text">
+
+
+      <button id="button5">inherited contract </button>
+      <span id="displayinstructors"></span>
+
+      <span id="verifySuccess"></span>
+
+
+
+
+      <h1>verifier 3 contract (inherited)</h1>
+      <h2>display instructor for default address</h2>
+
+
+
+
+      <button id="buttonDisplayAllInstructors">display instrucotr </button>
+      <span id="instructorForAddress"></span>
+
+      <h1> Enter classroom</h1>
+      <h2>1. Create a classroom with the following details the user creating the class will be the owner</h2>
+
+
+        <label for="className" class="col-lg-2 control-label">Class Name</label>
+        <input id="className" type="text">
+
+        <label for="classNumber" class="col-lg-2 control-label">Course Number</label>
+        <input id="classNumber" type="text">
+
+      <button id="createClass">Create Class </button>
+      <h2>2. this button represent a student entering the classroom an event is added to the list for that classroom</h2>
+      <!-- <IMG SRC="enter_room.gif"> -->
+      <!-- <button id="enterRoom">Enter Room </button>
+      <h2>3. this button queries all entries into that room </h2>
+      <button id="getRoom">All Entries </button>
+      <span id="displayClassDetails"></span>
+      <h2>4. this button queries all entries for a single address (person) </h2>
+      <button id="getUserEntries">User Entries </button>
+      <label for="classNameToEnter" class="col-lg-2 control-label">enter class name (address)</label>
+      <input id="classNameToEnter" type="text"> --> -->
+      ============================================================================================
+      Zombie stuff
+
+      <div id="txStatus"></div>
+      <div id="zombies"></div>
+
+
+
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+    //
+    //
+    //
+    // var a_2 = ["0x7e46d2f910b67fde9ee67c5eac1652e089e87429c518a2b6235baed1abc49a6", "0x44313a3b3e9b9c6350030a7cabf1fe83acb6465a98bff5fa7f985511e695a39"]
+    // var a_p_2= ["0x67255bfb3d582d5ba5797a50439939ab54bb3f02a33ade0279b6300a9c12eaa", "0x241784a2e0bbaeb2790c359700771dd8c46cd5cdfafbb996cd13abf2b0858e47"]
+    // var b_2= [["0x1f8dc17b4ca2eb16b89487a300f71def9d92291523861e899043bd6ee06c0500", "0x15f3fe392dac97bc61de7464950ed76734007e3fefd551b05967ed2684885f4e"], ["0xb190ea542e7a8dde87799613d5e86712fa397f1160b322cedc15e9f57c9a367", "0xe580a84d06c9cd55b00e7c5f069c999fd17e2e250a987f309ecc8dd9ed9bd71"]]
+    // var b_p_2= ["0xe000a9cdb51c020378943aad494dec1042807a1bc8c64c4cfe84d7b49c41cd7", "0x2dc4445a2eaf06193d5bb1088681e2f00ce15fd28bd19fb08a133e27abf60038"]
+    // var c_2 = ["0x15d4b33c3b83ac8fc77147d2de3fd51ab29a0dbe0e08eda19b0cc73bb55a8783", "0xeb82ce8ec2384cfeafce558bbf56cdc16249d46e24adefc3d464abb42824ee6"]
+    // var c_p_2= ["0x112811f7b873edd98e19c79119fb4b7136d19db2c23a1df4ea59c7222d09c9dc", "0x1e23ce0358a028a2b31275b4dac82f2487f9e36f01d1b827869f59192ae790e8"]
+    // var h_2= ["0xf144a6c2863660a4d3f45f268e60540a4c2a7fb2136c790fdcdc967464b196d", "0x2c7282fad1cccdef1297e0ba629d573efebd10991321b59d592fe8b43a161b3e"]
+    // var k_2 = ["0x2dcd6c76bd0e8483db7b26da34a1ff8ec16707694662e23fc1edf99c1a00cd2", "0x14417250c5ab466de3cb1387a2319e710f019953241d4b15af652b24a0d3dfb5"]
+    //
+    //
+    // var a = ["0x8b78a430cd2907120cf239e7dc621b4f3e772d487917e962354d350a347457", "0x14bd398a121de1835fcf50105b2f7f53b9a038c6149c32219a1037c0957406dd"]
+    // var a_p = ["0x9638fbf0401fd861e67dcfc56627942257db98e4eb65eb1756b3ade45683a8b", "0x11f8d30a6c765a20f285c86971ad9d54f95c27539593feb725c1697006f7bbb2"]
+    // var b = [["0x15dbd7caf97ad10c7e8dcc6cd5ffbe3dd2cfee822637c110a96b3c20570a97eb", "0x28e24b8d307c71713c2267ae85371b252a94f59a8d0329aaf9a916b602351e89"], ["0x6bb82890b2639b4f2d8d8582315d7cc4b9bf9f2a5ba2fec868ea7873c899576", "0x25ff1f15874577e7ecfab3639447f3823ca0d7fa4cb496f73dbd1546cb3743a7"]]
+    // var b_p = [ "0x1456d1c59bb637b7af83d5b60bc08230961716376aa115d63f5c6e6818a0fbe7", "0x142d511f32efd6d2b89ff3d7126432a2ef51e8b4b1905ee2f614238e7db0be53"]
+    // var c = ["0x2fbb99c54a250f1b70cbe423db5e62860801b40ce1d629ac971ba62b17bb15b8", "0x95541dbb62cb372483c7515bc8d22cc8edc6659ef4a167ffd070f6a4c43c7c4"]
+    //
+    // var c_p = ["0x209b042219f83402954b280bed39b4068495a096a04332b5b3f669c675989277", "0xada04398d7005c740ee52dc951d3470501c34a6c47dbc3652b9b6bc48d6a5e"]
+    // var h = ["0x1a658de0766d097847afa27d3f4f4ec35edf0a38c6d8793448de50d18b04c26f", "0x1f24492543392cd45f00656c6ca45d9d7d715e251eb26c29a9083b7ef85a65ea"]
+    // var k = ["0x1570bf39bb31226036631d4fb4c300714686829f043f3a81e0a743b37ca6a16f", "0xd958e4a8b347e2abfa6118e500f5e33a62dea3613067f89c50492330cb23da1"]
+    //
+    // var a_1 = ["0x276e0139438a2ef4bd2709200d0d73be57a0e9f5427b13b6284c89536abf771a", "0x2dc31739310752536dcdcfa2e10cc50fc50b9697259d5120a6ff96de58833862"]
+    // var a_p_1 = ["0x14001da2b15e73c5b0b50632dbf913797a590a7db9bb08a2cee0fc20799bfddd", "0x8bc0330c3c32ddc1fdc8e440f8f2b1f209ad75152b9b545b430e8bfbe65dcd7"]
+    // var b_1 = [["0xd6de6e08e5b2440aa9f92bc3def81b7e64b2c7c085c75a9dd090e8269873b0a", "0x2e62bb5af4380f53d6896f49ea7989e49b7c6e32629c5918d6ae0471499e6180"], ["0x104187c81fce439108dfbe0673e6944a11b893294ddf8b6123ffe839701493d", "0x18974ef59e8961f983b7c779a3c106f7242ec6fd9d7278ff681264a624aa7a9e"]]
+    // var b_p_1 =["0x2197055b29442019ba17090494aa773037e1d4b296d2c8f1f4c8a173005c4404", "0xae8d30fc1a5fd18cd69d45eb5e96b5439212ca2d6925ae6d8f93d04f7cbf5bb"]
+    // var c_1 = ["0x273c2a6de97811d717fd673f8c72c33f5c6940b89e54e0201d7736fb4f8cf7a5", "0x2b2e029523260fca4eba29b0d662202ccc5544c92509374cd1eb588b7a7b441d"]
+    // var c_p_1 = ["0xef9384c5104cc4449ab1c7034d8d6c3cfe1902dba71307487c2a9991baacc37", "0x21cf809af8027370488c5a146f67463e6163b439d55dcb387bb0eda5550498c1"]
+    // var h_1 = ["0x178d462326cbc999fc9fd76f83685da1c6511c0b76353274920a46fe7aca82b2", "0x1ef70f7043dcf58ccc316acf6c015680e2d6741018c1b68bba75b546cc1a98cd"]
+    // var k_1 = ["0x1fdccb6288c622a299cb8111c0fbcd96524a24b2911b1d8ba876497630be23eb", "0x2a30cd7b6f16e20dcc0d4beb8fa1433509d2609816342efede28edc5d3fe4eea"]
+    //
+
+
+    if (typeof web3 !== 'undefined') {
+        web3 = new Web3(web3.currentProvider);
+    } else {
+        // set the provider you want from Web3.providers
+        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    }
+    params = {
+        // 'gasPrice':20000000000,
+        // 'gas': 4000000,
+        'from':web3.eth.defaultAccount,
+    }
+    // abi = json.loads('')
+
+// var classroom_contract = web3.eth.contract([
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "_address",
+// 				"type": "address"
+// 			},
+// 			{
+// 				"name": "user_address",
+// 				"type": "address"
+// 			}
+// 		],
+// 		"name": "add_Entry",
+// 		"outputs": [],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "_address",
+// 				"type": "address"
+// 			},
+// 			{
+// 				"name": "_age",
+// 				"type": "uint256"
+// 			},
+// 			{
+// 				"name": "_fName",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"name": "_lName",
+// 				"type": "bytes16"
+// 			}
+// 		],
+// 		"name": "setClass",
+// 		"outputs": [],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "_address",
+// 				"type": "address"
+// 			},
+// 			{
+// 				"name": "_age",
+// 				"type": "uint256"
+// 			},
+// 			{
+// 				"name": "_fName",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"name": "_lName",
+// 				"type": "bytes16"
+// 			}
+// 		],
+// 		"name": "setInstructor",
+// 		"outputs": [],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "a",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "a_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "b",
+// 				"type": "uint256[2][2]"
+// 			},
+// 			{
+// 				"name": "b_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "h",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "k",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "input",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "_address",
+// 				"type": "address"
+// 			},
+// 			{
+// 				"name": "_age",
+// 				"type": "uint256"
+// 			},
+// 			{
+// 				"name": "_fName",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"name": "_lName",
+// 				"type": "bytes16"
+// 			}
+// 		],
+// 		"name": "verifyFifteen",
+// 		"outputs": [],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "a",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "a_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "b",
+// 				"type": "uint256[2][2]"
+// 			},
+// 			{
+// 				"name": "b_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "h",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "k",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "input",
+// 				"type": "uint256[2]"
+// 			}
+// 		],
+// 		"name": "verifyTx",
+// 		"outputs": [
+// 			{
+// 				"name": "r",
+// 				"type": "bool"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"anonymous": false,
+// 		"inputs": [
+// 			{
+// 				"indexed": false,
+// 				"name": "fName",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"indexed": false,
+// 				"name": "lName",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"indexed": false,
+// 				"name": "age",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"name": "classInfo",
+// 		"type": "event"
+// 	},
+// 	{
+// 		"anonymous": false,
+// 		"inputs": [
+// 			{
+// 				"indexed": false,
+// 				"name": "fName",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"indexed": false,
+// 				"name": "lName",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"indexed": false,
+// 				"name": "age",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"name": "instructorInfo",
+// 		"type": "event"
+// 	},
+// 	{
+// 		"anonymous": false,
+// 		"inputs": [
+// 			{
+// 				"indexed": false,
+// 				"name": "",
+// 				"type": "string"
+// 			}
+// 		],
+// 		"name": "Verified",
+// 		"type": "event"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [
+// 			{
+// 				"name": "",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"name": "classesAccts",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "address"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [],
+// 		"name": "countClasses",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [],
+// 		"name": "countInstructors",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [
+// 			{
+// 				"name": "_address",
+// 				"type": "address"
+// 			}
+// 		],
+// 		"name": "getClass",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "uint256"
+// 			},
+// 			{
+// 				"name": "",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"name": "",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"name": "",
+// 				"type": "address[]"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [],
+// 		"name": "getClasses",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "address[]"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [
+// 			{
+// 				"name": "_address",
+// 				"type": "address"
+// 			}
+// 		],
+// 		"name": "getInstructor",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "uint256"
+// 			},
+// 			{
+// 				"name": "",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"name": "",
+// 				"type": "bytes16"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [],
+// 		"name": "getInstructors",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "address[]"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [
+// 			{
+// 				"name": "",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"name": "instructorAccts",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "address"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [],
+// 		"name": "success",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "bool"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	}
+// ]);
+//
+// // currently using contract for paper
+// var one_priv_input_contract = web3.eth.contract([
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "a",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "a_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "b",
+// 				"type": "uint256[2][2]"
+// 			},
+// 			{
+// 				"name": "b_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "h",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "k",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "input",
+// 				"type": "uint256[1]"
+// 			}
+// 		],
+// 		"name": "verifyTx",
+// 		"outputs": [
+// 			{
+// 				"name": "r",
+// 				"type": "bool"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"anonymous": false,
+// 		"inputs": [
+// 			{
+// 				"indexed": false,
+// 				"name": "",
+// 				"type": "string"
+// 			}
+// 		],
+// 		"name": "Verified",
+// 		"type": "event"
+// 	}
+// ]);
+//
+//
+// var inherited_contract = web3.eth.contract([
+// 	{
+// 		"anonymous": false,
+// 		"inputs": [
+// 			{
+// 				"indexed": false,
+// 				"name": "fName",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"indexed": false,
+// 				"name": "lName",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"indexed": false,
+// 				"name": "age",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"name": "instructorInfo",
+// 		"type": "event"
+// 	},
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "_address",
+// 				"type": "address"
+// 			},
+// 			{
+// 				"name": "_age",
+// 				"type": "uint256"
+// 			},
+// 			{
+// 				"name": "_fName",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"name": "_lName",
+// 				"type": "bytes16"
+// 			}
+// 		],
+// 		"name": "setInstructor",
+// 		"outputs": [],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"anonymous": false,
+// 		"inputs": [
+// 			{
+// 				"indexed": false,
+// 				"name": "",
+// 				"type": "string"
+// 			}
+// 		],
+// 		"name": "Verified",
+// 		"type": "event"
+// 	},
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "a",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "a_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "b",
+// 				"type": "uint256[2][2]"
+// 			},
+// 			{
+// 				"name": "b_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "h",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "k",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "input",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "_address",
+// 				"type": "address"
+// 			},
+// 			{
+// 				"name": "_age",
+// 				"type": "uint256"
+// 			},
+// 			{
+// 				"name": "_fName",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"name": "_lName",
+// 				"type": "bytes16"
+// 			}
+// 		],
+// 		"name": "verifyFifteen",
+// 		"outputs": [],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "a",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "a_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "b",
+// 				"type": "uint256[2][2]"
+// 			},
+// 			{
+// 				"name": "b_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "h",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "k",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "input",
+// 				"type": "uint256[2]"
+// 			}
+// 		],
+// 		"name": "verifyTx",
+// 		"outputs": [
+// 			{
+// 				"name": "r",
+// 				"type": "bool"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [],
+// 		"name": "countInstructors",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [
+// 			{
+// 				"name": "_address",
+// 				"type": "address"
+// 			}
+// 		],
+// 		"name": "getInstructor",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "uint256"
+// 			},
+// 			{
+// 				"name": "",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"name": "",
+// 				"type": "bytes16"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [],
+// 		"name": "getInstructors",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "address[]"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [
+// 			{
+// 				"name": "",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"name": "instructorAccts",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "address"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [],
+// 		"name": "success",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "bool"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	}
+// ]);
+//
+//     var contract = web3.eth.contract([
+// 	{
+// 		"constant": true,
+// 		"inputs": [],
+// 		"name": "success",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "bool"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "a",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "a_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "b",
+// 				"type": "uint256[2][2]"
+// 			},
+// 			{
+// 				"name": "b_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "h",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "k",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "input",
+// 				"type": "uint256[2]"
+// 			}
+// 		],
+// 		"name": "verifyFifteen",
+// 		"outputs": [],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "a",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "a_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "b",
+// 				"type": "uint256[2][2]"
+// 			},
+// 			{
+// 				"name": "b_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "h",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "k",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "input",
+// 				"type": "uint256[2]"
+// 			}
+// 		],
+// 		"name": "verifyTx",
+// 		"outputs": [
+// 			{
+// 				"name": "r",
+// 				"type": "bool"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"anonymous": false,
+// 		"inputs": [
+// 			{
+// 				"indexed": false,
+// 				"name": "",
+// 				"type": "string"
+// 			}
+// 		],
+// 		"name": "Verified",
+// 		"type": "event"
+// 	}
+//
+//
+//
+//   // ABI of Verifier and    CoursetroContract folded here
+//
+// ]);
+//
+//     // web3.eth.defaultAccount
+//     web3.eth.defaultAccount = web3.eth.accounts[0];
+//     var Verifier = web3.eth.contract([
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "a",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "a_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "b",
+// 				"type": "uint256[2][2]"
+// 			},
+// 			{
+// 				"name": "b_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "c_p",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "h",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "k",
+// 				"type": "uint256[2]"
+// 			},
+// 			{
+// 				"name": "input",
+// 				"type": "uint256[2]"
+// 			}
+// 		],
+// 		"name": "verifyTx",
+// 		"outputs": [
+// 			{
+// 				"name": "r",
+// 				"type": "bool"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"anonymous": false,
+// 		"inputs": [
+// 			{
+// 				"indexed": false,
+// 				"name": "",
+// 				"type": "string"
+// 			}
+// 		],
+// 		"name": "Verified",
+// 		"type": "event"
+// 	}
+// ]);
+//
+//     var CoursetroContract = web3.eth.contract([
+// 	{
+// 		"anonymous": false,
+// 		"inputs": [
+// 			{
+// 				"indexed": false,
+// 				"name": "fName",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"indexed": false,
+// 				"name": "lName",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"indexed": false,
+// 				"name": "age",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"name": "instructorInfo",
+// 		"type": "event"
+// 	},
+// 	{
+// 		"constant": false,
+// 		"inputs": [
+// 			{
+// 				"name": "_address",
+// 				"type": "address"
+// 			},
+// 			{
+// 				"name": "_age",
+// 				"type": "uint256"
+// 			},
+// 			{
+// 				"name": "_fName",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"name": "_lName",
+// 				"type": "bytes16"
+// 			}
+// 		],
+// 		"name": "setInstructor",
+// 		"outputs": [],
+// 		"payable": false,
+// 		"stateMutability": "nonpayable",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [],
+// 		"name": "countInstructors",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [
+// 			{
+// 				"name": "_address",
+// 				"type": "address"
+// 			}
+// 		],
+// 		"name": "getInstructor",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "uint256"
+// 			},
+// 			{
+// 				"name": "",
+// 				"type": "bytes16"
+// 			},
+// 			{
+// 				"name": "",
+// 				"type": "bytes16"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [],
+// 		"name": "getInstructors",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "address[]"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	},
+// 	{
+// 		"constant": true,
+// 		"inputs": [
+// 			{
+// 				"name": "",
+// 				"type": "uint256"
+// 			}
+// 		],
+// 		"name": "instructorAccts",
+// 		"outputs": [
+// 			{
+// 				"name": "",
+// 				"type": "address"
+// 			}
+// 		],
+// 		"payable": false,
+// 		"stateMutability": "view",
+// 		"type": "function"
+// 	}
+// ]);
+
+
+var zombie_contract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_name",
+				"type": "string"
+			}
+		],
+		"name": "createRandomZombie",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_zombieId",
+				"type": "uint256"
+			},
+			{
+				"name": "_kittyId",
+				"type": "uint256"
+			}
+		],
+		"name": "feedOnKitty",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "setKittyContractAddress",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "zombieId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "dna",
+				"type": "uint256"
+			}
+		],
+		"name": "NewZombie",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "isOwner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "zombies",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "dna",
+				"type": "uint256"
+			},
+			{
+				"name": "level",
+				"type": "uint32"
+			},
+			{
+				"name": "readyTime",
+				"type": "uint32"
+			},
+			{
+				"name": "winCount",
+				"type": "uint16"
+			},
+			{
+				"name": "lossCount",
+				"type": "uint16"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "zombieToOwner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+var cryptoZombiesABI = ([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_name",
+				"type": "string"
+			}
+		],
+		"name": "createRandomZombie",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_zombieId",
+				"type": "uint256"
+			},
+			{
+				"name": "_kittyId",
+				"type": "uint256"
+			}
+		],
+		"name": "feedOnKitty",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "setKittyContractAddress",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "zombieId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "dna",
+				"type": "uint256"
+			}
+		],
+		"name": "NewZombie",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "isOwner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "zombies",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "dna",
+				"type": "uint256"
+			},
+			{
+				"name": "level",
+				"type": "uint32"
+			},
+			{
+				"name": "readyTime",
+				"type": "uint32"
+			},
+			{
+				"name": "winCount",
+				"type": "uint16"
+			},
+			{
+				"name": "lossCount",
+				"type": "uint16"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "zombieToOwner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+// var classroom_verifier = classroom_contract.at('0x63af206a69489f87108742b413357e517cefafab');
+// console.log(classroom_verifier);
+
+var house_contract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_name",
+				"type": "string"
+			}
+		],
+		"name": "createRandomZombie",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "zombieId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "dna",
+				"type": "uint256"
+			}
+		],
+		"name": "NewZombie",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "isOwner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "zombies",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "dna",
+				"type": "uint256"
+			},
+			{
+				"name": "level",
+				"type": "uint32"
+			},
+			{
+				"name": "readyTime",
+				"type": "uint32"
+			},
+			{
+				"name": "winCount",
+				"type": "uint16"
+			},
+			{
+				"name": "lossCount",
+				"type": "uint16"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "zombieToOwner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+
+var zombie_verifier = zombie_contract.at('0x544c8840c46275b734b5cf4e23cdd04ad8936f79');
+var house_verifier = house_contract.at('0xf9c9528d460cb9594f521ba91d9bbbe84e573d49');
+console.log(house_verifier);
+console.log(zombie_verifier)
+
+
+// zombie stuff below
+
+var cryptoZombies;
+cryptoZombies = zombie_verifier;
+console.log(cryptoZombies);
+// cryptoZombies = new web3.eth.contract(cryptoZombiesABI, '0x544c8840c46275b734b5cf4e23cdd04ad8936f79');
+var userAccount;
+if (web3.eth.accounts[0] !== userAccount) {
+  userAccount = web3.eth.accounts[0];
+
+
+}
+userAccount = web3.eth.accounts[0];
+// getZombiesByOwner(userAccount)
+// .then(displayZombies);
+
+function startApp() {
+  // var cryptoZombiesAddress = "0x50207a038828a5bc71e67fe668195c5486a06d8e";
+  // cryptoZombies = new web3js.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
+  cryptoZombies = zombie_verifier;
+  var accountInterval = setInterval(function() {
+
+
+  }, 100);
+
+  cryptoZombies.events.Transfer({ filter: { _to: userAccount } })
+  .on("data", function(event) {
+    let data = event.returnValues;
+    getZombiesByOwner(userAccount).then(displayZombies);
+  }).on("error", console.error);
+}
+
+function displayZombies(ids) {
+  $("#zombies").empty();
+  for (id of ids) {
+
+    getZombieDetails(id)
+    .then(function(zombie) {
+
+
+      $("#zombies").append(`<div class="zombie">
+        <ul>
+          <li>Name: ${zombie.name}</li>
+          <li>DNA: ${zombie.dna}</li>
+          <li>Level: ${zombie.level}</li>
+          <li>Wins: ${zombie.winCount}</li>
+          <li>Losses: ${zombie.lossCount}</li>
+          <li>Ready Time: ${zombie.readyTime}</li>
+        </ul>
+      </div>`);
+    });
+  }
+}
+
+function createRandomZombie(name) {
+
+
+  $("#txStatus").text("Creating new zombie on the blockchain. This may take a while...");
+
+  return cryptoZombies.methods.createRandomZombie(name)
+  .send({ from: userAccount })
+  .on("receipt", function(receipt) {
+    $("#txStatus").text("Successfully created " + name + "!");
+
+    getZombiesByOwner(userAccount).then(displayZombies);
+  })
+  .on("error", function(error) {
+
+    $("#txStatus").text(error);
+  });
+}
+
+function createRandomZombieHouse(name) {
+
+
+  $("#txStatus").text("Creating new zombie on the blockchain. This may take a while...");
+
+  return house_verifier.methods.createRandomZombie(name)
+  .send({ from: userAccount })
+  .on("receipt", function(receipt) {
+    $("#txStatus").text("Successfully created " + name + "!");
+
+    // getZombiesByOwner(userAccount).then(displayZombies);
+  })
+  .on("error", function(error) {
+
+    $("#txStatus").text(error);
+  });
+}
+
+function feedOnKitty(zombieId, kittyId) {
+  $("#txStatus").text("Eating a kitty. This may take a while...");
+  return cryptoZombies.methods.feedOnKitty(zombieId, kittyId)
+  .send({ from: userAccount })
+  .on("receipt", function(receipt) {
+    $("#txStatus").text("Ate a kitty and spawned a new Zombie!");
+    getZombiesByOwner(userAccount).then(displayZombies);
+  })
+  .on("error", function(error) {
+    $("#txStatus").text(error);
+  });
+}
+
+function levelUp(zombieId) {
+  $("#txStatus").text("Leveling up your zombie...");
+  return cryptoZombies.methods.levelUp(zombieId)
+  .send({ from: userAccount, value: web3.utils.toWei("0.001", "ether") })
+  .on("receipt", function(receipt) {
+    $("#txStatus").text("Power overwhelming! Zombie successfully leveled up");
+  })
+  .on("error", function(error) {
+    $("#txStatus").text(error);
+  });
+}
+
+function getZombieDetails(id) {
+  return cryptoZombies.methods.zombies(id).call()
+}
+
+function zombieToOwner(id) {
+  return cryptoZombies.methods.zombieToOwner(id).call()
+}
+
+function getZombiesByOwner(owner) {
+  return cryptoZombies.methods.getZombiesByOwner(owner).call()
+}
+
+window.addEventListener('load', function() {
+
+
+  if (typeof web3 !== 'undefined') {
+
+    web3js = new Web3(web3.currentProvider);
+  } else {
+
+
+  }
+
+
+  // startApp()
+  // cryptoZombies.methods.createRandomZombie("Vitalik Nakamoto 🤔")
+  //   .send({ from: userAccount, gas: "3000000" });
+
+})
+
+  // createRandomZombie("hello");
+// // getZombiesByOwner(userAccount);
+// instructorEvent.watch(function(error, result) {
+//     if (result) {
+//         if (result.blockHash != $("#insTrans").html())
+//              $("#loader").hide();
+//
+//         $("#insTrans").html('Block hash: ' + result.blockHash);
+//         $("#instructor").html(web3.toAscii(result.args.fName) + ' ' + web3.toAscii(result.args.lName) + ' (' + result.args.age + ' years old)');
+//     } else {
+//          $("#loader").hide();
+//     }
+// });
+
+house_verifier.createRandomZombie("test",function(error, result){
+    if(!error)
+        {
+            $("#instructor").html(result[0]+' ('+result[1]+' years old)');
+            console.log(result);
+        }
+    else
+        console.error(error);
+});
+
+
+
+
+
+
+
+//
+// // contract using now for paper
+// var one_in_priv_con = one_priv_input_contract.at('0x6ebdc1b5939c8f0e73d56355d1dd9f098fb9609f');
+//
+//
+// var Verifyer3 = inherited_contract.at('0xfa52e243adea165b513c7220b2192fc8df7b3429');
+// console.log(Verifyer2);
+//
+// var Verifyer2 = contract.at('0x8a719d91b201d4d76275bb651044f54cd4c13435');
+// console.log(Verifyer2);
+// var Verifyer = Verifier.at('0x7a91eab9ea80caa81c44ec0a51cf760c65c2eb10');
+// console.log(Verifyer);
+// var Coursetro = CoursetroContract.at('0x0750683d5ee002a72ab86b63aea077137585a508');
+// console.log(Coursetro);
+//
+// // Change ^-- that to:
+// var instructorEvent = Coursetro.instructorInfo({}, 'latest');
+//
+// instructorEvent.watch(function(error, result) {
+//     if (result) {
+//         if (result.blockHash != $("#insTrans").html())
+//              $("#loader").hide();
+//
+//         $("#insTrans").html('Block hash: ' + result.blockHash);
+//         $("#instructor").html(web3.toAscii(result.args.fName) + ' ' + web3.toAscii(result.args.lName) + ' (' + result.args.age + ' years old)');
+//     } else {
+//          $("#loader").hide();
+//     }
+// });
+// // Coursetro.getInstructor(function(error, result){
+// //     if(!error)
+// //         {
+// //             $("#instructor").html(result[0]+' ('+result[1]+' years old)');
+// //             console.log(result);
+// //         }
+// //     else
+// //         console.error(error);
+// // });
+//
+//
+//
+// Coursetro.countInstructors((err, res) => {
+//     if (res)
+//      $("#countIns").html(res.c + ' vehicles');
+// })
+//
+// $("#button").click(function() {
+//      $("#loader").show();
+//     Coursetro.setInstructor(web3.eth.defaultAccount, $("#age").val(), $("#fName").val(), $("#lName").val(), (err, res) => {
+//         if (err) {
+//             $("#loader").hide();
+//         }
+//     });
+// });
+//
+//
+// // function below creates a transaction to verify this user and provide zero knowledge Proof
+// // current proof program is
+// // 1 + 2 + (input a) == 15 else return 0
+// // return 1
+// //out put is 1 and input should be 12
+// // can be changed to request social security number or something like Authenthication
+//
+// $("#button3").click(function() {
+//      $("#loader").show();
+//     var txhash = Verifyer2.verifyFifteen(a, a_p, b, b_p, c, c_p, h, k, [11,1],transact=params,  (err, res) => {
+//
+//         if (err) {
+//             $("#loader").hide();
+//         }
+//     });
+//
+//     // at this point zero knowledge has provided Authenthication
+//     // you have proven that you know some secret function
+//     // lets assume this first blockchain is kept track of by all members
+//     // hence it is public and people can see these transaction have occured
+//
+//
+//     // if instead contract success return
+//     // i want to return a new _address
+//
+//     // once new address is returned I will set that new address as default
+//     // tranfer all assets to new _address
+//
+//     var success = Verifyer2.success( (err, res) => {
+//       // var success = Verifyer2.success();
+//       // console.log(success);
+//       console.log(success);
+//         if (err) {
+//             $("#loader").hide();
+//         }
+//     });
+// });
+// $("#button4").click(function() {
+//      $("#loader").show();
+//     var success = classroom_verifier.success( (err, res) => {
+//       // var success = Verifyer2.success();
+//       // console.log(success);
+//       console.log(res);
+//       $("#verifySuccess").html('Zero knowledge Authenthication was ' + res + ' !!');
+//         if (err) {
+//             $("#loader").hide();
+//         }
+//     });
+// });
+//
+// // $("#age").val(), $("#fName").val(), $("#lName").val()
+// $("#button5").click(function() {
+//      $("#loader").show();
+//     var txhash = Verifyer3.verifyFifteen(a, a_p, b, b_p, c, c_p, h, k, [12,1],
+//        web3.eth.defaultAccount , $("#year").val(), $("#firstName").val(), $("#lastName").val()
+//        , transact=params,  (err, res) => {
+//
+//         if (err) {
+//             $("#loader").hide();
+//         }
+//     });
+//     $("#loader").hide();
+//     classroom_verifier.setInstructor(web3.eth.defaultAccount,$("#year").val(),
+//      $("#firstName").val(), $("#lastName").val(),
+//      transact=params,  (err, res) => {
+//      if (err) {
+//          $("#loader").hide();
+//      }
+//    });
+//     // if instead contract success return
+//     // i want to return a new _address
+//     // once new address is returned I will set that new address as default
+//     // tranfer all assets to new _address
+//
+//     // var success = Verifyer3.success( (err, res) => {
+//     //
+//     //   console.log(success);
+//     //     if (err) {
+//     //         $("#loader").hide();
+//     //     }
+//     // });
+// });
+//
+// $("#buttonDisplayAllInstructors").click(function() {
+//      $("#loader").show();
+//     var success = Verifyer3.getInstructor( web3.eth.defaultAccount ,(err, res) => {
+//       // var success = Verifyer2.success();
+//       // console.log(success);
+//       console.log(res);
+//       $("#instructorForAddress").html('Display Instructor ffor given address default  ' + res + ' !!');
+//         if (err) {
+//             $("#loader").hide();
+//         }
+//     });
+// });
+//
+// $("#createClass").click(function() {
+//      $("#loader").show();
+//     var txhash = classroom_verifier.verifyFifteen(a_1, a_p_1, b_1, b_p_1, c_1, c_p_1, h_1, k_1, [1,3],
+//        web3.eth.defaultAccount , $("#year").val(), $("#firstName").val(), $("#lastName").val()  ,
+//        transact=params,  (err, res) => {
+//         if (err) {
+//             $("#loader").hide();
+//         }
+//     });
+//     $("#loader").hide();
+//
+//     classroom_verifier.setClass(web3.eth.defaultAccount, $("#classNumber").val(),
+//     $("#className").val(), "course",  (err, res) => {
+//         if (err) {
+//             $("#loader").hide();
+//         }
+//     });
+//     var success = classroom_verifier.success( (err, res) => {
+//       console.log(success);
+//         if (err) {
+//             $("#loader").hide();
+//         }
+//     });
+// });
+//
+//
+// $("#enterRoom").click(function() {
+//      $("#loader").show();
+//     var txhash = classroom_verifier.verifyFifteen(a, a_p, b, b_p, c, c_p, h, k,
+//       [12,1], web3.eth.defaultAccount ,
+//        $("#year").val(), $("#firstName").val(), $("#lastName").val()  ,
+//         (err, res) => {
+//         if (err) {
+//             $("#loader").hide();
+//         }
+//     });
+//     $("#loader").hide();
+//
+//     // var success = classroom_verifier.success( (err, res) => {
+//     //
+//     //   console.log(success);
+//     //     if (err) {
+//     //         $("#loader").hide();
+//     //     }
+//     // });
+//
+//     classroom_verifier.add_Entry($("#classNameToEnter").val(),
+//        web3.eth.defaultAccount, transact=params,  (err, res) => {
+//         if (err) {
+//             $("#loader").hide();
+//         }
+//     });
+// });
+//
+// $("#getRoom").click(function() {
+//
+//   $("#displayClassDetails").html('Details for the default class  \n');
+//     var class_details = classroom_verifier.getClass(web3.eth.defaultAccount,
+//         transact=params,  (err, res) => {
+//           for (i=0;i<res[3].length;i++){
+//           // $("#displayClassDetails").html('Details for the default class  '
+//           //  +    res[3][i] + '\n !!');
+//            $("#displayClassDetails").append(res[3][i]+'\n');
+//        }
+//
+//         if (err) {
+//             $("#loader").hide();
+//         }
+//     });
+//
+// });
+
+    </script>
+
+</body>
+</html>
