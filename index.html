@@ -2,38 +2,396 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>CryptoZombies front-end</title>
+    <title>Fun houzes front-end</title>
     <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="./node_modules/web3/dist/web3.min.js"></script>
     <script language="javascript" type="text/javascript" src="cryptozombies_abi.js"></script>
   </head>
   <body>
+    ====================================================================================================
+    <h2>My Houses</h2>
     <div id="txStatus"></div>
     <div id="zombies"></div>
+    <div id="verifySuccess"></div>
+    <div id="housePic"></div>
+    <div id="zombie"></div>
+    <div id="numOfHousesDisplay"></div>
+
+
+    <label for="houseNum" class="col-lg-2 control-label">which house to use:</label>
+    <input id="houseNum" type="text">
+
+    <button id="button3">is Owner</button>
+    <button id="zomb">zombiesread</button>
+    <button id="levelUpHouse">Upgrade House</button>
+    <button id="numOfHouses">Number of Houses</button>
+    <button id="putHouseForSale">Put House for sale</button>
+    <button id="loadPicture">display pic of house</button>
+    ====================================================================================================
+    <h2>Houses For sale</h2>
+    <button id="loadHousesForSale">load houses for sale</button>
+
+    <div id="HousesForSale"></div>
+
+
+
+
 
     <script>
       var cryptoZombies;
       var userAccount;
+var CoursesContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_name",
+				"type": "string"
+			}
+		],
+		"name": "createRandomZombie",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_zombieId",
+				"type": "uint256"
+			},
+			{
+				"name": "_kittyId",
+				"type": "uint256"
+			}
+		],
+		"name": "feedOnKitty",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_zombieId",
+				"type": "uint256"
+			}
+		],
+		"name": "levelUpHouse",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_zombieId",
+				"type": "uint256"
+			}
+		],
+		"name": "sellHome",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "setKittyContractAddress",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "zombieId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "dna",
+				"type": "uint256"
+			}
+		],
+		"name": "NewZombie",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "housesForSale",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "dna",
+				"type": "uint256"
+			},
+			{
+				"name": "level",
+				"type": "uint32"
+			},
+			{
+				"name": "readyTime",
+				"type": "uint32"
+			},
+			{
+				"name": "winCount",
+				"type": "uint16"
+			},
+			{
+				"name": "lossCount",
+				"type": "uint16"
+			},
+			{
+				"name": "forSale",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "isOwner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "numOfHouses",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "numOfHousesForSale",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "zombies",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "dna",
+				"type": "uint256"
+			},
+			{
+				"name": "level",
+				"type": "uint32"
+			},
+			{
+				"name": "readyTime",
+				"type": "uint32"
+			},
+			{
+				"name": "winCount",
+				"type": "uint16"
+			},
+			{
+				"name": "lossCount",
+				"type": "uint16"
+			},
+			{
+				"name": "forSale",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "zombieToOwner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+var Courses = CoursesContract.at('0xce9c8ccf36040f83daa9a383679adac6992789d9');
+
+
 
       function startApp() {
-        var cryptoZombiesAddress = "YOUR_CONTRACT_ADDRESS";
-        cryptoZombies = new web3js.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
 
+        var cryptoZombiesAddress = "0xce9c8ccf36040f83daa9a383679adac6992789d9";
+        // cryptoZombies = new web3js.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
+        cryptoZombies = Courses;
+        console.log(cryptoZombies);
         var accountInterval = setInterval(function() {
 
           if (web3.eth.accounts[0] !== userAccount) {
             userAccount = web3.eth.accounts[0];
+            web3.eth.defaultAccount = web3.eth.accounts[0];
+            console.log(web3);
 
-            getZombiesByOwner(userAccount)
-            .then(displayZombies);
+
+            // getZombiesByOwner(userAccount)
+            // .then(displayZombies);
           }
         }, 100);
 
-        cryptoZombies.events.Transfer({ filter: { _to: userAccount } })
-        .on("data", function(event) {
-          let data = event.returnValues;
-          getZombiesByOwner(userAccount).then(displayZombies);
-        }).on("error", console.error);
+        // cryptoZombies.events.Transfer({ filter: { _to: userAccount } })
+        // .on("data", function(event) {
+        //   let data = event.returnValues;
+        //   // getZombiesByOwner(userAccount).then(displayZombies);
+        // }).on("error", console.error);
+        var success = Courses.zombies($("#houseNum").val(), (err, res) => {
+          // var success = Verifyer2.success();
+          // console.log(success);
+          console.log(res[2]);
+          var levelOfHouse = res[2];
+          var imageToUse = "tent" + (levelOfHouse);
+          var imagePre = '<img id="theImg" src="./imgs/'+imageToUse+'.jpg" />'
+          $('#housePic').empty()
+          $('#housePic').prepend(imagePre)
+          $("#zombie").html('Zero knowledge Authenthication was ' + res + ' !!');
+            if (err) {
+                $("#loader").hide();
+            }
+        });
+// creates random default hous when app starts this should only be able to be done once
+        var success = Courses.createRandomZombie("default", (err, res) => {
+          $("#zombie").html('created default house ' + res + ' !!');
+            if (err) {
+
+            }
+        });
+
+
+
+
       }
 
       function displayZombies(ids) {
@@ -102,7 +460,19 @@
       }
 
       function getZombieDetails(id) {
-        return cryptoZombies.methods.zombies(id).call()
+        var success = Courses.zombies(id, (err, res) => {
+          // var success = Verifyer2.success();
+          // console.log(success);
+          // console.log(res);
+          // $("#zombie").html('Zero knowledge Authenthication was ' + res + ' !!');
+            if (err) {
+                $("#loader").hide();
+            }
+        });
+        return Courses.zombies(id).call()
+      }
+      function listZombie(){
+        return cryptoZombies.isOwner()
       }
 
       function zombieToOwner(id) {
@@ -110,22 +480,171 @@
       }
 
       function getZombiesByOwner(owner) {
-        return cryptoZombies.methods.getZombiesByOwner(owner).call()
+        return cryptoZombies.getZombiesByOwner(owner).call()
       }
 
       window.addEventListener('load', function() {
 
 
-        if (typeof web3 !== 'undefined') {
 
-          web3js = new Web3(web3.currentProvider);
-        } else {
-
-
-        }
+                if (typeof web3 !== 'undefined') {
+                    web3 = new Web3(web3.currentProvider);
+                } else {
+                    // set the provider you want from Web3.providers
+                    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+                }
 
 
         startApp()
+
+
+        // var list= [0]
+        // displayZombies(list)
+
+
+        $("#button3").click(function() {
+             $("#loader").show();
+            var success = Courses.isOwner( (err, res) => {
+              // var success = Verifyer2.success();
+              // console.log(success);
+              console.log(res);
+              $("#verifySuccess").html('Your are the owner of the contract ' + res + ' !!');
+                if (err) {
+                    $("#loader").hide();
+                }
+            });
+        });
+
+        $("#numOfHouses").click(function() {
+             $("#loader").show();
+            var success = Courses.numOfHouses( (err, res) => {
+              // var success = Verifyer2.success();
+              // console.log(success);
+              console.log(res);
+              $("#numOfHousesDisplay").html('The number of Houses you have is: ' + res + ' !!');
+                if (err) {
+                    $("#loader").hide();
+                }
+            });
+        });
+
+
+        $("#zomb").click(function() {
+             $("#loader").show();
+            var success = Courses.zombies($("#houseNum").val(), (err, res) => {
+              // var success = Verifyer2.success();
+              // console.log(success);
+              console.log(res);
+              $("#zombie").html('The House at 0: ' + res + ' !!');
+                if (err) {
+                    $("#loader").hide();
+                }
+            });
+        });
+
+        $("#levelUpHouse").click(function() {
+             $("#loader").show();
+            var success = Courses.levelUpHouse($("#houseNum").val(), (err, res) => {
+              // var success = Verifyer2.success();
+              // console.log(success);
+              console.log(res);
+              var levelOfHouse = res;
+              $("#zombie").html('Zero knowledge Authenthication was ' + res + ' !!');
+                if (err) {
+                    $("#loader").hide();
+                }
+            });
+        });
+
+
+
+// getting picture to load based on the levelUp
+
+$("#loadPicture").click(function() {
+     $("#loader").show();
+    var success = Courses.zombies($("#houseNum").val(), (err, res) => {
+      // var success = Verifyer2.success();
+      // console.log(success);
+      console.log(res[2]);
+      var levelOfHouse = res[2];
+      var imageToUse = "tent" + (levelOfHouse);
+      var imagePre = '<img id="theImg" src="./imgs/'+imageToUse+'.jpg" />'
+      $('#housePic').empty()
+      $('#housePic').prepend(imagePre)
+      $("#zombie").html('Zero knowledge Authenthication was ' + res + ' !!');
+        if (err) {
+            $("#loader").hide();
+        }
+    });
+});
+
+$("#loadHousesForSale").click(function() {
+     $("#loader").show();
+     $('#HousesForSale').empty()
+     var success1 = Courses.numOfHousesForSale( (err, res) => {
+       // var success = Verifyer2.success();
+       // console.log(success);
+       var numHousesForSaleatm = res;
+       console.log(numHousesForSaleatm+"number of houses for sale");
+
+       var i=0;
+       while (i < numHousesForSaleatm){
+      var success = Courses.housesForSale(i, (err, res) => {
+        // var success = Verifyer2.success();
+        // console.log(success);
+        console.log(res[2]);
+        var levelOfHouse = res[2];
+        var imageToUse = "tent" + (levelOfHouse)+'.jpg" />';
+        var imagePre = '<img  src="./imgs/'+imageToUse;
+        $('#HousesForSale').append(imagePre);
+
+
+        $("#zombie").html('Zero knowledge Authenthication was ' + res + ' !!');
+          if (err) {
+              $("#loader").hide();
+          }
+      });
+      i++;
+    }
+
+
+
+       console.log(res);
+       $("#zombie").html('put house up for sale ' + res + ' !!');
+         if (err) {
+             $("#loader").hide();
+         }
+     });
+
+
+});
+
+
+
+// populate the list of available Houses
+
+// TODO: MAKE A LIST OF AVAILABLE HOMES WHICH GET ADDED TO A LIST BASED ON IF THEY ARE FOR SALE
+
+
+
+
+
+        $("#putHouseForSale").click(function() {
+             $("#loader").show();
+            var success = Courses.sellHome($("#houseNum").val(), (err, res) => {
+              // var success = Verifyer2.success();
+              // console.log(success);
+              console.log(res);
+              $("#zombie").html('put house up for sale ' + res + ' !!');
+                if (err) {
+                    $("#loader").hide();
+                }
+            });
+        });
+
+
+
+
 
       })
     </script>
